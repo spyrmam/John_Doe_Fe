@@ -143,7 +143,7 @@ do
 end
  
 --Player Stuff--
-player = game:GetService("Players").owner
+player = owner
 chara = player.Character
  
 ch = chara:GetChildren()
