@@ -138,7 +138,7 @@ end
  
 --Player Stuff--
 player = game:GetService("Players").LocalPlayer
-chara = player.Character
+chara = player.owner
  
 ch = chara:GetChildren()
 for i = 1, #ch do
