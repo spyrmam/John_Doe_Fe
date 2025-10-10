@@ -1,145 +1,151 @@
-if game:GetService("RunService"):IsClient() then error("Script must be server-side in order to work; use h/ and not hl/") end local Player,game,owner = owner,game local RealPlayer = Player do print("Doing your mom!11!") local rp = RealPlayer script.Parent = rp.Character
+if game:GetService("RunService"):IsClient() then error("Script must be server-side in order to work; use h/ and not hl/") end
+local Player,game,owner = owner,game
+local RealPlayer = Player
+do
+    print("this shit was made by spyrmam")
+    local rp = RealPlayer
+    script.Parent = rp.Character
 
---RemoteEvent for communicating
-local Event = Instance.new("RemoteEvent")
-Event.Name = "UserInput_Event"
+    --RemoteEvent for communicating
+    local Event = Instance.new("RemoteEvent")
+    Event.Name = "UserInput_Event"
 
---Fake event to make stuff like Mouse.KeyDown work
-local function fakeEvent()
-    local t = {_fakeEvent=true,Functions={},Connect=function(self,f)table.insert(self.Functions,f) end}
-    t.connect = t.Connect
-    return t
-end
-
---Creating fake input objects with fake variables
-local m = {Target=nil,Hit=CFrame.new(),KeyUp=fakeEvent(),KeyDown=fakeEvent(),Button1Up=fakeEvent(),Button1Down=fakeEvent()}
-local UIS = {InputBegan=fakeEvent(),InputEnded=fakeEvent()}
-local CAS = {Actions={},BindAction=function(self,name,fun,touch,...)
-    CAS.Actions[name] = fun and {Name=name,Function=fun,Keys={...}} or nil
-end}
---Merged 2 functions into one by checking amount of arguments
-CAS.UnbindAction = CAS.BindAction
-
---This function will trigger the events that have been :Connect()'ed
-local function te(self,ev,...)
-    local t = m[ev]
-    if t and t._fakeEvent then
-        for _,f in pairs(t.Functions) do
-            f(...)
-        end
+    --Fake event to make stuff like Mouse.KeyDown work
+    local function fakeEvent()
+        local t = {_fakeEvent=true,Functions={},Connect=function(self,f)table.insert(self.Functions,f) end}
+        t.connect = t.Connect
+        return t
     end
-end
-m.TrigEvent = te
-UIS.TrigEvent = te
 
-Event.OnServerEvent:Connect(function(plr,io)
-    if plr~=rp then return end
-    m.Target = io.Target
-    m.Hit = io.Hit
-    if not io.isMouse then
-        local b = io.UserInputState == Enum.UserInputState.Begin
-        if io.UserInputType == Enum.UserInputType.MouseButton1 then
-            return m:TrigEvent(b and "Button1Down" or "Button1Up")
-        end
-        for _,t in pairs(CAS.Actions) do
-            for _,k in pairs(t.Keys) do
-                if k==io.KeyCode then
-                    t.Function(t.Name,io.UserInputState,io)
-                end
+    --Creating fake input objects with fake variables
+    local m = {Target=nil,Hit=CFrame.new(),KeyUp=fakeEvent(),KeyDown=fakeEvent(),Button1Up=fakeEvent(),Button1Down=fakeEvent()}
+    local UIS = {InputBegan=fakeEvent(),InputEnded=fakeEvent()}
+    local CAS = {Actions={},BindAction=function(self,name,fun,touch,...)
+        CAS.Actions[name] = fun and {Name=name,Function=fun,Keys={...}} or nil
+    end}
+    --Merged 2 functions into one by checking amount of arguments
+    CAS.UnbindAction = CAS.BindAction
+
+    --This function will trigger the events that have been :Connect()'ed
+    local function te(self,ev,...)
+        local t = m[ev]
+        if t and t._fakeEvent then
+            for _,f in pairs(t.Functions) do
+                f(...)
             end
         end
-        m:TrigEvent(b and "KeyDown" or "KeyUp",io.KeyCode.Name:lower())
-        UIS:TrigEvent(b and "InputBegan" or "InputEnded",io,false)
     end
-end)
-Event.Parent = NLS([==[
-local Player = game:GetService("Players").LocalPlayer
-local Event = script:WaitForChild("UserInput_Event")
+    m.TrigEvent = te
+    UIS.TrigEvent = te
 
-local Mouse = Player:GetMouse()
-local UIS = game:GetService("UserInputService")
-local input = function(io,a)
-    if a then return end
-    --Since InputObject is a client-side instance, we create and pass table instead
-    Event:FireServer({KeyCode=io.KeyCode,UserInputType=io.UserInputType,UserInputState=io.UserInputState,Hit=Mouse.Hit,Target=Mouse.Target})
-end
-UIS.InputBegan:Connect(input)
-UIS.InputEnded:Connect(input)
+    Event.OnServerEvent:Connect(function(plr,io)
+        if plr~=rp then return end
+        m.Target = io.Target
+        m.Hit = io.Hit
+        if not io.isMouse then
+            local b = io.UserInputState == Enum.UserInputState.Begin
+            if io.UserInputType == Enum.UserInputType.MouseButton1 then
+                return m:TrigEvent(b and "Button1Down" or "Button1Up")
+            end
+            for _,t in pairs(CAS.Actions) do
+                for _,k in pairs(t.Keys) do
+                    if k==io.KeyCode then
+                        t.Function(t.Name,io.UserInputState,io)
+                    end
+                end
+            end
+            m:TrigEvent(b and "KeyDown" or "KeyUp",io.KeyCode.Name:lower())
+            UIS:TrigEvent(b and "InputBegan" or "InputEnded",io,false)
+        end
+    end)
+    Event.Parent = NLS([==[
+    local Player = game:GetService("Players").LocalPlayer
+    local Event = script:WaitForChild("UserInput_Event")
 
-local h,t
---Give the server mouse data 30 times every second, but only if the values changed
---If player is not moving their mouse, client won't fire events
-while wait(1/30) do
-    if h~=Mouse.Hit or t~=Mouse.Target then
-        h,t=Mouse.Hit,Mouse.Target
-        Event:FireServer({isMouse=true,Target=t,Hit=h})
+    local Mouse = Player:GetMouse()
+    local UIS = game:GetService("UserInputService")
+    local input = function(io,a)
+        if a then return end
+        --Since InputObject is a client-side instance, we create and pass table instead
+        Event:FireServer({KeyCode=io.KeyCode,UserInputType=io.UserInputType,UserInputState=io.UserInputState,Hit=Mouse.Hit,Target=Mouse.Target})
     end
-end]==],Player.Character)
+    UIS.InputBegan:Connect(input)
+    UIS.InputEnded:Connect(input)
 
-----Sandboxed game object that allows the usage of client-side methods and services
---Real game object
-local _rg = game
+    local h,t
+    --Give the server mouse data 30 times every second, but only if the values changed
+    --If player is not moving their mouse, client won't fire events
+    while wait(1/30) do
+        if h~=Mouse.Hit or t~=Mouse.Target then
+            h,t=Mouse.Hit,Mouse.Target
+            Event:FireServer({isMouse=true,Target=t,Hit=h})
+        end
+    end]==],Player.Character)
 
---Metatable for fake service
-local fsmt = {
-    __index = function(self,k)
-        local s = rawget(self,"_RealService")
-        if s then return s[k] end
-    end,
-    __newindex = function(self,k,v)
-        local s = rawget(self,"_RealService")
-        if s then s[k]=v end
-    end,
-    __call = function(self,...)
-        local s = rawget(self,"_RealService")
-        if s then return s(...) end
+    ----Sandboxed game object that allows the usage of client-side methods and services
+    --Real game object
+    local _rg = game
+
+    --Metatable for fake service
+    local fsmt = {
+        __index = function(self,k)
+            local s = rawget(self,"_RealService")
+            if s then return s[k] end
+        end,
+        __newindex = function(self,k,v)
+            local s = rawget(self,"_RealService")
+            if s then s[k]=v end
+        end,
+        __call = function(self,...)
+            local s = rawget(self,"_RealService")
+            if s then return s(...) end
+        end
+    }
+    local function FakeService(t,RealService)
+        t._RealService = typeof(RealService)=="string" and _rg:GetService(RealService) or RealService
+        return setmetatable(t,fsmt)
     end
-}
-local function FakeService(t,RealService)
-    t._RealService = typeof(RealService)=="string" and _rg:GetService(RealService) or RealService
-    return setmetatable(t,fsmt)
+
+    --Fake game object
+    local g = {
+        GetService = function(self,s)
+            return self[s]
+        end,
+        Players = FakeService({
+            LocalPlayer = FakeService({GetMouse=function(self)return m end},Player)
+        },"Players"),
+        UserInputService = FakeService(UIS,"UserInputService"),
+        ContextActionService = FakeService(CAS,"ContextActionService"),
+    }
+    rawset(g.Players,"localPlayer",g.Players.LocalPlayer)
+    g.service = g.GetService
+
+    g.RunService = FakeService({
+        RenderStepped = _rg:GetService("RunService").Heartbeat,
+        BindToRenderStep = function(self,name,_,fun)
+            self._btrs[name] = self.Heartbeat:Connect(fun)
+        end,
+        UnbindFromRenderStep = function(self,name)
+            self._btrs[name]:Disconnect()
+        end,
+    },"RunService")
+
+    setmetatable(g,{
+        __index=function(self,s)
+            return _rg:GetService(s) or typeof(_rg[s])=="function"
+            and function(_,...)return _rg[s](_rg,...)end or _rg[s]
+        end,
+        __newindex = fsmt.__newindex,
+        __call = fsmt.__call
+    })
+    --Changing owner to fake player object to support owner:GetMouse()
+    game,owner = g,g.Players.LocalPlayer
 end
 
---Fake game object
-local g = {
-    GetService = function(self,s)
-        return self[s]
-    end,
-    Players = FakeService({
-        LocalPlayer = FakeService({GetMouse=function(self)return m end},Player)
-    },"Players"),
-    UserInputService = FakeService(UIS,"UserInputService"),
-    ContextActionService = FakeService(CAS,"ContextActionService"),
-}
-rawset(g.Players,"localPlayer",g.Players.LocalPlayer)
-g.service = g.GetService
-
-g.RunService = FakeService({
-    RenderStepped = _rg:GetService("RunService").Heartbeat,
-    BindToRenderStep = function(self,name,_,fun)
-
-    end,
-    UnbindFromRenderStep = function(self,name)
-        self._btrs[name]:Disconnect()
-    end,
-},"RunService")
-
-setmetatable(g,{
-    __index=function(self,s)
-        return _rg:GetService(s) or typeof(_rg[s])=="function"
-        and function(_,...)return _rg[s](_rg,...)end or _rg[s]
-    end,
-    __newindex = fsmt.__newindex,
-    __call = fsmt.__call
-})
---Changing owner to fake player object to support owner:GetMouse()
-game,owner = g,g.Players.LocalPlayer
-end
- 
 --Player Stuff--
 player = game:GetService("Players").LocalPlayer
 chara = player.Character
- 
+
 ch = chara:GetChildren()
 for i = 1, #ch do
 if ch[i].Name == "Torso" then
@@ -151,13 +157,13 @@ elseif ch[i].ClassName == "Accessory" or ch[i].ClassName == "Shirt" or ch[i].Cla
 ch[i]:Destroy()
 end
 end
- 
+
 chara["Left Arm"].BrickColor = BrickColor.new("Cool yellow")
 chara["Right Arm"].BrickColor = BrickColor.new("Cool yellow")
 chara["Left Leg"].BrickColor = BrickColor.new("Medium blue")
 chara["Right Leg"].BrickColor = BrickColor.new("Medium blue")
 chara.Torso.BrickColor = BrickColor.new("Bright yellow")
- 
+
 --Outfit--
 New = function(Object, Parent, Name, Data)
 	local Object = Instance.new(Object)
@@ -168,7 +174,7 @@ New = function(Object, Parent, Name, Data)
 	Object.Name = Name
 	return Object
 end
- 
+
 function ScatterEff(part)
 local eff1 = Instance.new("ParticleEmitter",part)
 eff1.Size = NumberSequence.new(.1)
@@ -191,7 +197,7 @@ eff2.VelocitySpread = 10000
 eff2.Texture = "rbxassetid://347504259"
 eff2.Color = ColorSequence.new(Color3.new(1,0,0))
 end
- 
+
 function BurningEff(part)
 local eff1 = Instance.new("ParticleEmitter",part)
 eff1.Size = NumberSequence.new(.1)
@@ -224,7 +230,7 @@ eff3.Texture = "rbxasset://textures/particles/fire_main.dds"
 eff3.Acceleration = Vector3.new(0,10,0)
 eff3.Color = ColorSequence.new(Color3.new(1,0,0))
 end
- 
+
 FakeHead = New("Model",chara,"FakeHead",{})
 MainPart = New("Part",FakeHead,"MainPart",{FormFactor = Enum.FormFactor.Symmetric,Size = Vector3.new(2, 1, 1),CFrame = CFrame.new(2.29537678, 7.81603718, 0.746068954, 0.00980896503, 0.00110200304, 0.999957919, -0.000536994543, 1.00000548, -0.00109680078, -0.99994874, -0.0005262224, 0.00980964955),CanCollide = false,TopSurface = Enum.SurfaceType.Smooth,})
 Mesh = New("SpecialMesh",MainPart,"Mesh",{Scale = Vector3.new(1.25, 1.25, 1.25),})
@@ -347,12 +353,12 @@ CorruptedPart = New("Part",RightLeg,"CorruptedPart",{BrickColor = BrickColor.new
 Mesh = New("BlockMesh",CorruptedPart,"Mesh",{Scale = Vector3.new(1.10000002, 1.10000002, 1.10000002),})
 Weld = New("ManualWeld",CorruptedPart,"Weld",{Part0 = CorruptedPart,Part1 = MainPart,C0 = CFrame.new(0, 0, 0, 0.999955773, -0.00108199974, 0.00933999848, 0.00111051148, 0.999994755, -0.00304800388, -0.00933665223, 0.00305824145, 0.99995178),C1 = CFrame.new(-1.63316727e-005, 0.400005937, 0.400005102, 0.00933599845, -0.0030579993, -0.99995178, 0.00110999751, 0.999994755, -0.0030477671, 0.999955773, -0.00108149007, 0.00933934376),})
 ScatterEff(EffCorruptedPart)
- 
+
 sa = RightArm:GetChildren()
 for i = 1, #sa do
 ScatterEff(sa[i])
 end
- 
+
 local eff1 = Instance.new("ParticleEmitter",EyeFire)
 eff1.Size = NumberSequence.new(.1)
 eff1.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,0),NumberSequenceKeypoint.new(.2,0),NumberSequenceKeypoint.new(1,1)})
@@ -386,22 +392,23 @@ eff3.Rate = 100
 eff3.Texture = "rbxasset://textures/particles/fire_main.dds"
 eff3.Acceleration = Vector3.new(0,10,0)
 eff3.Color = ColorSequence.new(Color3.new(1,0,0))
- 
+
 --Sounds--
 slashsnd = New("Sound",chara.Torso,"Slash",{SoundId = "rbxassetid://28144425",PlaybackSpeed = .7,Volume = 5})
 hitsnd = New("Sound",chara.Torso,"Hit",{SoundId = "rbxassetid://429400881",PlaybackSpeed = .7,Volume = 5})
 telesnd = New("Sound",chara.Torso,"Tele",{SoundId = "rbxassetid://2767090",PlaybackSpeed = .7,Volume = 5})
 burnsnd = New("Sound",chara.Torso,"Burn",{SoundId = "rbxassetid://32791565",PlaybackSpeed = .7,Volume = 5})
+music1 = New("Sound",chara.Torso,"Music1",{SoundId = "rbxassetid://15577942966",PlaybackSpeed = .5,Volume = 10,Looped = true})
 music1 = New("Sound",chara.Torso,"Music1",{SoundId = "rbxassetid://97591",PlaybackSpeed = .5,Volume = 10,Looped = true})
 music2 = New("Sound",chara.Torso,"Music2",{SoundId = "rbxassetid://11984351",PlaybackSpeed = .2,Volume = 5,Looped = true})
 deathmus = New("Sound",chara.Torso,"DeathMus",{SoundId = "rbxassetid://19094700",PlaybackSpeed = .5,Volume = 5,Looped = true})
 deathex = New("Sound",chara.Torso,"DeathEx",{SoundId = "rbxassetid://11984351",PlaybackSpeed = 1,Volume = 5})
 music1:Play()
 music2:Play()
- 
+
 --Animations--
 swinganim = chara.Humanoid:LoadAnimation(New("Animation",chara,"Swing",{AnimationId = "rbxassetid://186934658"}))
- 
+
 --Name Tag--
 local naeeym = Instance.new("BillboardGui",chara)
 naeeym.Size = UDim2.new(0,100,0,40)
@@ -417,7 +424,7 @@ tecks.TextStrokeTransparency = 0
 tecks.TextStrokeColor3 = Color3.new(0,0,0)
 tecks.TextColor3 = Color3.new(0,0,0)
 tecks.Size = UDim2.new(1,0,0.5,0)
- 
+
 --Skybox--
 skybox = Instance.new("Part",chara)
 skybox.Size = Vector3.new(0,0,0)
@@ -428,7 +435,7 @@ skyboxmesh.MeshId = "http://www.roblox.com/asset/?id=1527559"
 skyboxmesh.TextureId = "http://www.roblox.com/asset/?id=1529455"
 skyboxmesh.VertexColor = Vector3.new(1,0,0)
 skyboxmesh.Scale = Vector3.new(-3000,-1000,-3000)
- 
+
 --Soul Steal--
 function SoulSteal(pos)
 local soulst = coroutine.wrap(function()
@@ -460,7 +467,7 @@ end
 end)
 soulst()
 end
- 
+
 --Death of a Mortal--
 function KillMortal(hitdude)
 local torsy = nil
@@ -497,7 +504,7 @@ chi[i]:Destroy()
 end
 end
 end
- 
+
 --Arm Touch--
 bladeactive = false
 Hitbox.Touched:connect(function(hit)
@@ -508,7 +515,7 @@ KillMortal(hit.Parent)
 end
 end
 end)
- 
+
 --Teleport--
 function Teleport(pos)
 telesnd:Play()
@@ -540,7 +547,7 @@ end
 end
 chara.Torso.CFrame = CFrame.new(pos.X,pos.Y,pos.Z)
 end
- 
+
 --Grab--
 function Grab(mouse)
 local hit = mouse.Target
@@ -567,7 +574,7 @@ KillMortal(hit.Parent)
 end
 else end
 end
- 
+
 --Button1Down--
 dell = false
 function onButton1Down()
@@ -582,7 +589,7 @@ dell = false
 swinganim:Stop()
 end
 end
- 
+
 --KeyDowns--
 function onKeyDown(key)
 if key == "z" then
@@ -591,14 +598,14 @@ elseif key == "x" then
 Grab(Mouse)
 end
 end
- 
+
 --Mouse Functions--
 Mouse = player:GetMouse()
 if Mouse then
 Mouse.Button1Down:connect(onButton1Down)
 Mouse.KeyDown:connect(onKeyDown)
 end
- 
+
 --Death--
 chara.Humanoid.Died:connect(function()
 local pat = Instance.new("Part",game.Workspace)
@@ -627,7 +634,7 @@ ex.Visible = false
 ex.BlastRadius = 999999999999999999999999
 ex.BlastPressure = 9999999999999999999999999
 end)
- 
+
 --Loop Function--
 while true do
 wait(.01)
