@@ -80,7 +80,7 @@ do
 end
  
 --Player Stuff--
-player = owner
+player = game:GetService("Players").LocalPlayer
 chara = player.Character
  
 ch = chara:GetChildren()
